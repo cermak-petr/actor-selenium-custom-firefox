@@ -19,6 +19,16 @@
       "editor": "textfield"
     },
 
+    "timeout": {
+      "title": "Page load timeout",
+      "type": "integer",
+      "description": "Indicates how long to wait for the page to finish loading",
+      "minimum": 0,
+      "maximum": 999999999999,
+      "prefill": 60000,
+      "unit": "seconds"
+    },
+
     "delaySecs": {
       "title": "Delay",
       "type": "integer",
