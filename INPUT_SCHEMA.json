@@ -18,6 +18,15 @@
       "description": "Proxy to use (optional)",
       "editor": "textfield"
     },
+    
+    "maxTries": {
+      "title": "Maximum tries",
+      "type": "integer",
+      "description": "Maximum number of tries to open the page",
+      "minimum": 1,
+      "maximum": 50,
+      "unit": "tries"
+    },
 
     "timeout": {
       "title": "Page load timeout",
