@@ -55,7 +55,7 @@ Apify.main(async () => {
     
     //await webDriver.setTimeout({ 'pageLoad': 60000 });
     const TIMEOUT = 60000;
-    await driver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT });
+    await webDriver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT });
 
     console.log(`Opening URL: ${input.url}`);
     const xxx = await webDriver.get(input.url);
