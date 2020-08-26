@@ -52,6 +52,8 @@ Apify.main(async () => {
     const input = await Apify.getInput();
 
     const webDriver = await launchFirefoxWebdriver(input.proxyUrl);
+    
+    await webDriver.setTimeout({ 'pageLoad': 60000 });
 
     console.log(`Opening URL: ${input.url}`);
     const xxx = await webDriver.get(input.url);
