@@ -8,6 +8,20 @@ const firefox = require('selenium-webdriver/firefox');
 const proxy = require('selenium-webdriver/proxy');
 const { anonymizeProxy } = require('proxy-chain');
 
+const retry = async (func, tries, sleep) => {
+    for(let i = 0; i < tries || 50; i++){
+        try{
+            await func();
+            break;
+        }
+        catch(e){
+            console.log(e.message);
+            if(i < ((tries || 50) - 1)){console.log('Retrying...');}
+            await Apify.utils.sleep(sleep || 5000);
+        }
+    }
+};
+
 const launchFirefoxWebdriver = async (proxyUrl) => {
     // logging.installConsoleHandler();
     // logging.getLogger('webdriver.http').setLevel(logging.Level.ALL);
@@ -58,7 +72,10 @@ Apify.main(async () => {
     await webDriver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT });
 
     console.log(`Opening URL: ${input.url}`);
-    const xxx = await webDriver.get(input.url);
+    
+    await retry(() => { 
+        const xxx = await webDriver.get(input.url);
+    }, input.maxTries || 1);
 
     const url = await webDriver.getCurrentUrl();
     console.log(`Loaded URL ${url}`);
@@ -75,14 +92,14 @@ Apify.main(async () => {
     });
     console.log(`HTML length: ${html.length} chars`);
 
-    console.log('Taking screenshot');
+    /*console.log('Taking screenshot');
     const screenshotBase64 = await webDriver.takeScreenshot();
     const buffer = Buffer.from(screenshotBase64, 'base64');
-    console.log(`Screenshot size: ${buffer.length} bytes`);
+    console.log(`Screenshot size: ${buffer.length} bytes`);*/
 
     console.log('Saving data to key-value store');
     await Apify.setValue('content.html', html, { contentType: 'text/html' });
-    await Apify.setValue('screenshot.png', buffer, { contentType: 'image/png' });
+    //await Apify.setValue('screenshot.png', buffer, { contentType: 'image/png' });
 
     await webDriver.quit();
 
