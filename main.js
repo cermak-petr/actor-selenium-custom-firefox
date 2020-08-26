@@ -73,7 +73,7 @@ Apify.main(async () => {
 
     console.log(`Opening URL: ${input.url}`);
     
-    await retry(() => { 
+    await retry(async () => { 
         const xxx = await webDriver.get(input.url);
     }, input.maxTries || 1);
 
