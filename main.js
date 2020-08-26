@@ -16,8 +16,11 @@ const retry = async (func, tries, sleep) => {
         }
         catch(e){
             console.log(e.message);
-            if(i < ((tries || 50) - 1)){console.log('Retrying...');}
-            await Apify.utils.sleep(sleep || 5000);
+            if(i < ((tries || 50) - 1)){
+                console.log('Retrying...');
+                await Apify.utils.sleep(sleep || 5000);
+            }
+            else{throw e;}
         }
     }
 };
