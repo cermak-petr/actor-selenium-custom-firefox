@@ -26,7 +26,7 @@
       "minimum": 0,
       "maximum": 999999999999,
       "prefill": 60000,
-      "unit": "seconds"
+      "unit": "miliseconds"
     },
 
     "delaySecs": {
